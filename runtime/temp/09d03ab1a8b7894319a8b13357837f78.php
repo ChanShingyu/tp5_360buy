@@ -1,7 +1,51 @@
-{extend name="home"}
-{block name="title"}京西商城首页{/block}
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:74:"E:\wamp64\www\tp5_360buy\public/../application/index\view\index\index.html";i:1556505182;s:57:"E:\wamp64\www\tp5_360buy\application\index\view\home.html";i:1556191920;}*/ ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>京西商城首页</title>
+	<link rel="stylesheet" href="/style/base.css" type="text/css">
+	<link rel="stylesheet" href="/style/global.css" type="text/css">
+	<link rel="stylesheet" href="/style/header.css" type="text/css">
+	<link rel="stylesheet" href="/style/index.css" type="text/css">
+	<link rel="stylesheet" href="/style/bottomnav.css" type="text/css">
+	<link rel="stylesheet" href="/style/footer.css" type="text/css">
 
-{block name="header"}
+	<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="/js/header.js"></script>
+	<script type="text/javascript" src="/js/index.js"></script>
+	
+</head>
+<body>
+	
+	<!-- 顶部导航 start -->
+	<div class="topnav" id="top">
+		<div class="topnav_bd w1210 bc">
+			<div class="topnav_left">
+				
+			</div>
+			<div class="topnav_right fr">
+				<ul>
+					<li>您好, <?php if(!empty($userinfo)): ?> <?php echo $userinfo['username']; endif; ?> 欢迎来到京西！
+						<?php if(empty($userinfo)): ?><span >
+					[<a href="/index/login/login">登录</a>] [<a href="/index/login/register">免费注册</a>]</span> <?php endif; ?></li>
+					<?php if(!empty($userinfo)): ?>
+					<li class="line">|</li>
+					<li ><a href="/index/login/logout">退出</a></li>
+					<?php endif; ?>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+
+	
+	<!-- 顶部导航 end -->
+	
+	<div style="clear:both;"></div>
+
+	
 <!-- 头部 start -->
 	<div class="header w1210 bc mt15">
 		<!-- 头部上半部分 start 包括 logo、搜索、用户中心和购物车结算 -->
@@ -31,7 +75,7 @@
 
 			<!-- 用户中心 start-->
 			<div class="user fl">
-				{if condition="!empty($userinfo)"}
+				<?php if(!empty($userinfo)): ?>
 				<dl>
 					<dt>
 						<em></em>
@@ -69,7 +113,7 @@
 						</div>
 					</dd>
 				</dl>
-				{/if}
+				<?php endif; ?>
 			</div>
 			<!-- 用户中心 end-->
 
@@ -103,27 +147,25 @@
 				</div>
 				
 				<div class="cat_bd">
-				{if !empty($category)}
-					{foreach $category as $cate}
+				<?php if(!empty($category)): foreach($category as $cate): ?>
 					<div class="cat">
-						<h3><a href="">{$cate.cate_name}</a><b></b></h3>
+						<h3><a href=""><?php echo $cate['cate_name']; ?></a><b></b></h3>
 						
 						<div class="cat_detail">
-							{if condition="isset($cate['son'])"}
+							<?php if(isset($cate['son'])): ?>
 							<dl>
 								<dd>
-								{foreach $cate['son'] as $c}
-									<a href="">{$c.cate_name}</a>
-								{/foreach}						
+								<?php foreach($cate['son'] as $c): ?>
+									<a href=""><?php echo $c['cate_name']; ?></a>
+								<?php endforeach; ?>						
 								</dd>
 							</dl>
-							{/if}
+							<?php endif; ?>
 						</div>
 						
 
 					</div>
-					{/foreach}
-					{/if}
+					<?php endforeach; endif; ?>
 
 				</div>
 
@@ -146,8 +188,11 @@
 		<!-- 导航条部分 end -->
 	</div>
 	<!-- 头部 end-->
-	{/block}
-{block name="content"}
+	
+	
+	<div style="clear:both;"></div>
+	
+	
 
 <!-- 综合区域 start 包括幻灯展示，商城快报 -->
 	<div class="colligate w1210 bc mt10">
@@ -156,19 +201,17 @@
 			<div class="area">
 				<div class="slide_items">
 					<ul>
-					{if !empty($banner)}
-						{foreach $banner as $bann}
-						<li><a href="{$bann.ad_link}" title="{$bann.ad_name}"><img src="{$bann.image_url}" alt="" /></a></li>
-						{/foreach}
+					<?php if(!empty($banner)): foreach($banner as $bann): ?>
+						<li><a href="<?php echo $bann['ad_link']; ?>" title="<?php echo $bann['ad_name']; ?>"><img src="<?php echo $bann['image_url']; ?>" alt="" /></a></li>
+						<?php endforeach; ?>
 						
 					</ul>
 				</div>
 				<div class="slide_controls">
 					<ul>
-						{foreach $banner as $key => $bann}
-						<li {if condition="$key==0"} class="on"  {/if}>{$key+1}</li>
-						{/foreach}
-					{/if}
+						<?php foreach($banner as $key => $bann): ?>
+						<li <?php if($key==0): ?> class="on"  <?php endif; ?>><?php echo $key+1; ?></li>
+						<?php endforeach; endif; ?>
 					</ul>
 				</div>
 			</div>
@@ -178,11 +221,9 @@
 		<!-- 快报区域 start-->
 		<div class="coll_right fl ml10">
 			<div class="ad">
-			{if !empty($home_top)}
-				{foreach $home_top as  $top}
-						<a href="" title="{$top.ad_name}"><img src="{$top.image_url}" alt="" /></a>
-				{/foreach}
-			{/if}	
+			<?php if(!empty($home_top)): foreach($home_top as  $top): ?>
+						<a href="" title="<?php echo $top['ad_name']; ?>"><img src="<?php echo $top['image_url']; ?>" alt="" /></a>
+				<?php endforeach; endif; ?>	
 			</div>
 			
 			<div class="news mt10">
@@ -223,15 +264,15 @@
 				<!-- 热卖商品 start -->
 				<div class="hot">
 					<ul>
-						{foreach $hot as $h}
+						<?php foreach($hot as $h): ?>
 						<li>
 							<dl>
-								<dt><a href="/index/detail/index?id={$h.id}"><img src="{$h.image_url}" alt="" /></a></dt>
-								<dd><a href="/index/detail/index?id={$h.id}">{$h.goods_name}</a></dd>
-								<dd><span>售价：</span><strong> ￥{$h.market_price}</strong></dd>
+								<dt><a href="/index/detail/index?id=<?php echo $h['id']; ?>"><img src="<?php echo $h['image_url']; ?>" alt="" /></a></dt>
+								<dd><a href="/index/detail/index?id=<?php echo $h['id']; ?>"><?php echo $h['goods_name']; ?></a></dd>
+								<dd><span>售价：</span><strong> ￥<?php echo $h['market_price']; ?></strong></dd>
 							</dl>
 						</li>
-						{/foreach}
+						<?php endforeach; ?>
 					</ul>
 				</div>
 				<!-- 热卖商品 end -->
@@ -239,15 +280,15 @@
 				<!-- 推荐商品 atart -->
 				<div class="recommend none">
 					<ul>
-						{foreach $recommand as $r}
+						<?php foreach($recommand as $r): ?>
 						<li>
 							<dl>
-								<dt><a href="/index/detail/index?id={$r.id}"><img src="{$r.image_url}" alt="" /></a></dt>
-								<dd><a href="/index/detail/index?id={$r.id}">{$r.goods_name}</a></dd>
-								<dd><span>售价：</span><strong> ￥{$r.market_price}</strong></dd>
+								<dt><a href="/index/detail/index?id=<?php echo $r['id']; ?>"><img src="<?php echo $r['image_url']; ?>" alt="" /></a></dt>
+								<dd><a href="/index/detail/index?id=<?php echo $r['id']; ?>"><?php echo $r['goods_name']; ?></a></dd>
+								<dd><span>售价：</span><strong> ￥<?php echo $r['market_price']; ?></strong></dd>
 							</dl>
 						</li>
-						{/foreach}
+						<?php endforeach; ?>
 					</ul>
 				</div>
 				<!-- 推荐商品 end -->
@@ -255,15 +296,15 @@
 				<!-- 新品上架 start-->
 				<div class="new none">
 					<ul>
-						{foreach $news as $n}
+						<?php foreach($news as $n): ?>
 						<li>
 							<dl>
-								<dt><a href="/index/detail/index?id={$n.id}"><img src="{$n.image_url}" alt="" /></a></dt>
-								<dd><a href="/index/detail/index?id={$n.id}">{$n.goods_name}</a></dd>
-								<dd><span>售价：</span><strong> ￥{$n.market_price}</strong></dd>
+								<dt><a href="/index/detail/index?id=<?php echo $n['id']; ?>"><img src="<?php echo $n['image_url']; ?>" alt="" /></a></dt>
+								<dd><a href="/index/detail/index?id=<?php echo $n['id']; ?>"><?php echo $n['goods_name']; ?></a></dd>
+								<dd><span>售价：</span><strong> ￥<?php echo $n['market_price']; ?></strong></dd>
 							</dl>
 						</li>
-						{/foreach}
+						<?php endforeach; ?>
 					</ul>
 				</div>
 				<!-- 新品上架 end-->
@@ -485,9 +526,9 @@
 				<h2><a href="">更多品牌&nbsp;></a><strong>品牌旗舰店</strong></h2>
 				<div class="sidebar_wrap">
 					<ul>
-						{foreach $brands as $b}
-						<li style="line-height: 35px;text-align: center;font-size: 16px; "><a href="/goods/list"><b>{$b.brand_name}</b></a></li>
-						{/foreach}
+						<?php foreach($brands as $b): ?>
+						<li style="line-height: 35px;text-align: center;font-size: 16px; "><a href="/goods/list"><b><?php echo $b['brand_name']; ?></b></a></li>
+						<?php endforeach; ?>
 						
 					</ul>
 				</div>
@@ -499,9 +540,9 @@
 				<h2><strong>分类资讯</strong></h2>
 				<div class="sidebar_wrap">
 					<ul>
-						{foreach $articles as $a}
-						<li><a href="/article/detail?id={$a.id}"><b>.</b>{$a.title}</a></li>
-						{/foreach}
+						<?php foreach($articles as $a): ?>
+						<li><a href="/article/detail?id=<?php echo $a['id']; ?>"><b>.</b><?php echo $a['title']; ?></a></li>
+						<?php endforeach; ?>
 					</ul>
 				</div>
 				
@@ -510,11 +551,9 @@
 			
 			<!-- 广告 start -->
 			<div class="ads mt10">
-			{if !empty($homt_bottom)}
-				{foreach $homt_bottom as  $bottom}
-						<a href="" title="{$bottom.ad_name}"><img src="{$bottom.image_url}" alt="" /></a>
-				{/foreach}
-			{/if}
+			<?php if(!empty($homt_bottom)): foreach($homt_bottom as  $bottom): ?>
+						<a href="" title="<?php echo $bottom['ad_name']; ?>"><img src="<?php echo $bottom['image_url']; ?>" alt="" /></a>
+				<?php endforeach; endif; ?>
 			</div>
 			<!-- 广告 end -->
 		</div>
@@ -526,4 +565,100 @@
 
 	
 
-{/block}
+
+	
+	<div style="clear:both;"></div>
+
+	<!-- 底部导航 start -->
+	<div class="bottomnav w1210 bc mt10">
+		<div class="bnav1">
+			<h3><b></b> <em>购物指南</em></h3>
+			<ul>
+				<li><a href="">购物流程</a></li>
+				<li><a href="">会员介绍</a></li>
+				<li><a href="">团购/机票/充值/点卡</a></li>
+				<li><a href="">常见问题</a></li>
+				<li><a href="">大家电</a></li>
+				<li><a href="">联系客服</a></li>
+			</ul>
+		</div>
+		
+		<div class="bnav2">
+			<h3><b></b> <em>配送方式</em></h3>
+			<ul>
+				<li><a href="">上门自提</a></li>
+				<li><a href="">快速运输</a></li>
+				<li><a href="">特快专递（EMS）</a></li>
+				<li><a href="">如何送礼</a></li>
+				<li><a href="">海外购物</a></li>
+			</ul>
+		</div>
+
+		
+		<div class="bnav3">
+			<h3><b></b> <em>支付方式</em></h3>
+			<ul>
+				<li><a href="">货到付款</a></li>
+				<li><a href="">在线支付</a></li>
+				<li><a href="">分期付款</a></li>
+				<li><a href="">邮局汇款</a></li>
+				<li><a href="">公司转账</a></li>
+			</ul>
+		</div>
+
+		<div class="bnav4">
+			<h3><b></b> <em>售后服务</em></h3>
+			<ul>
+				<li><a href="">退换货政策</a></li>
+				<li><a href="">退换货流程</a></li>
+				<li><a href="">价格保护</a></li>
+				<li><a href="">退款说明</a></li>
+				<li><a href="">返修/退换货</a></li>
+				<li><a href="">退款申请</a></li>
+			</ul>
+		</div>
+
+		<div class="bnav5">
+			<h3><b></b> <em>特色服务</em></h3>
+			<ul>
+				<li><a href="">夺宝岛</a></li>
+				<li><a href="">DIY装机</a></li>
+				<li><a href="">延保服务</a></li>
+				<li><a href="">家电下乡</a></li>
+				<li><a href="">京东礼品卡</a></li>
+				<li><a href="">能效补贴</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- 底部导航 end -->
+
+	<div style="clear:both;"></div>
+	<!-- 底部版权 start -->
+	<div class="footer w1210 bc mt10">
+		<p class="links">
+			<a href="">关于我们</a> |
+			<a href="">联系我们</a> |
+			<a href="">人才招聘</a> |
+			<a href="">商家入驻</a> |
+			<a href="">千寻网</a> |
+			<a href="">奢侈品网</a> |
+			<a href="">广告服务</a> |
+			<a href="">移动终端</a> |
+			<a href="">友情链接</a> |
+			<a href="">销售联盟</a> |
+			<a href="">京西论坛</a>
+		</p>
+		<p class="copyright">
+			 © 2005-2013 京东网上商城 版权所有，并保留所有权利。  ICP备案证书号:京ICP证070359号 
+		</p>
+		<p class="auth">
+			<a href=""><img src="/images/xin.png" alt="" /></a>
+			<a href=""><img src="/images/kexin.jpg" alt="" /></a>
+			<a href=""><img src="/images/police.jpg" alt="" /></a>
+			<a href=""><img src="/images/beian.gif" alt="" /></a>
+		</p>
+	</div>
+	<!-- 底部版权 end -->
+
+</body>
+</html>
